@@ -22,7 +22,11 @@ endif
 	touch .build
 
 shell: .check .build
+ifdef PODMAN
+	$(TOOL) run -it --rm -v "$(WORKSPACE_DIR)":/root/workspace:z $(TOOLCHAIN_NAME) /bin/bash
+else
 	$(TOOL) run -it --rm -v "$(WORKSPACE_DIR)":/root/workspace $(TOOLCHAIN_NAME) /bin/bash
+endif
 
 clean: .check
 	$(TOOL) rmi $(TOOLCHAIN_NAME)
